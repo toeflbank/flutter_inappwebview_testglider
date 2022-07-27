@@ -1567,20 +1567,19 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         }
     }
     
-    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        currentOriginalUrl = url
-        lastTouchPoint = nil
-        
-        disposeWebMessageChannels()
-        initializeWindowIdJS()
-        
-        if #available(iOS 14.0, *) {
-            configuration.userContentController.resetContentWorlds(windowId: windowId)
-        }
-        
-        onLoadStart(url: url?.absoluteString)
-        
-        inAppBrowserDelegate?.didStartNavigation(url: url)
+    // revised on 07.27.2022 by seunghwanly
+    // - purpose: to set current user's permission in permanently
+    // - required: iOS version 15+, https://developer.apple.com/documentation/webkit/wkwebview/3763098-setmicrophonecapturestate
+    @available(iOS 15, *)
+    public func webView(
+        _ webView: WKWebView, 
+        requestMediaCapturePermissionFor origin: WKSecurityOrigin,
+        initiatedByFrame frame: WKFrameInfo,
+        type: WKMediaCaptureType,
+        decisionHandler: @escaping (WKPermissionDecision) -> Void
+        ) {
+        // set to grant to ask user only once
+        decisionHandler(.grant)
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
