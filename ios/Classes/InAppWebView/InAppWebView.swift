@@ -9,7 +9,7 @@ import Flutter
 import Foundation
 import WebKit
 import MediaPlayer
-
+import SwiftUI
 public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIGestureRecognizerDelegate, PullToRefreshDelegate {
 
     var windowId: Int64?
@@ -1588,23 +1588,17 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         // remove the remote control event
         let center = MPRemoteCommandCenter.shared()
         center.playCommand.isEnabled = false
-        center.playCommand.addTarget { [unowned self] event in 
-            return .commandFailed
-        }
+        center.playCommand.removeTarget(nil)
         center.pauseCommand.isEnabled = false
-        center.pauseCommand.addTarget { [unowned self] event in 
-            return .commandFailed
-        }
+        center.pauseCommand.removeTarget(nil)
         center.seekBackwardCommand.isEnabled = false
-        center.seekBackwardCommand.addTarget { [unowned self] event in 
-            return .commandFailed
-        }
+        center.seekBackwardCommand.removeTarget(nil)
         center.seekForwardCommand.isEnabled = false
-        center.seekForwardCommand.addTarget { [unowned self] event in 
-            return .commandFailed
-        }
+        center.seekForwardCommand.removeTarget(nil)
         let nowPlayingCenter = MPNowPlayingInfoCenter.default()
         nowPlayingCenter.nowPlayingInfo = [:]
+        // end stream
+        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
