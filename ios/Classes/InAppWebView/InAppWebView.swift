@@ -1580,6 +1580,13 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         ) {
         // set to grant to ask user only once
         decisionHandler(.grant)
+        // disable control center
+        if #available(iOS 9.0, *) {
+            configuration.allowsAirPlayForMediaPlayback = false
+            configuration.allowsPictureInPictureMediaPlayback = false
+        }
+        configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone
+        
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
