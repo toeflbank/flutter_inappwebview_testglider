@@ -8,6 +8,7 @@
 import Flutter
 import Foundation
 import WebKit
+import MediaPlayer
 
 public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIGestureRecognizerDelegate, PullToRefreshDelegate {
 
@@ -1584,7 +1585,12 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         configuration.allowsAirPlayForMediaPlayback = false
         configuration.allowsPictureInPictureMediaPlayback = false
         configuration.mediaTypesRequiringUserActionForPlayback = []
-        
+        // remove the remote control event
+        let center = MPRemoteCommandCenter.shared()
+        center.playCommand.isEnabled = false
+        center.pauseCommand.isEnabled = false
+        center.seekBackwardCommand.isEnabled = false
+        center.seekForwardCommand.isEnabled = false
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
