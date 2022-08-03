@@ -78,6 +78,24 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         panGestureRecognizer = UIPanGestureRecognizer()
         panGestureRecognizer.delegate = self
         panGestureRecognizer.addTarget(self, action: #selector(endDraggingDetected))
+        // disable audio external controls
+        configuration.allowsAirPlayForMediaPlayback = false
+        configuration.allowsPictureInPictureMediaPlayback = false
+        configuration.mediaTypesRequiringUserActionForPlayback = []
+        // remove the remote control event
+        let center = MPRemoteCommandCenter.shared()
+        center.playCommand.isEnabled = false
+        center.playCommand.removeTarget(nil)
+        center.pauseCommand.isEnabled = false
+        center.pauseCommand.removeTarget(nil)
+        center.seekBackwardCommand.isEnabled = false
+        center.seekBackwardCommand.removeTarget(nil)
+        center.seekForwardCommand.isEnabled = false
+        center.seekForwardCommand.removeTarget(nil)
+        let nowPlayingCenter = MPNowPlayingInfoCenter.default()
+        nowPlayingCenter.nowPlayingInfo = [:]
+        // end stream
+        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     override public var frame: CGRect {
@@ -1581,24 +1599,6 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         ) {
         // set to grant to ask user only once
         decisionHandler(.grant)
-        // disable control center
-        configuration.allowsAirPlayForMediaPlayback = false
-        configuration.allowsPictureInPictureMediaPlayback = false
-        configuration.mediaTypesRequiringUserActionForPlayback = []
-        // remove the remote control event
-        let center = MPRemoteCommandCenter.shared()
-        center.playCommand.isEnabled = false
-        center.playCommand.removeTarget(nil)
-        center.pauseCommand.isEnabled = false
-        center.pauseCommand.removeTarget(nil)
-        center.seekBackwardCommand.isEnabled = false
-        center.seekBackwardCommand.removeTarget(nil)
-        center.seekForwardCommand.isEnabled = false
-        center.seekForwardCommand.removeTarget(nil)
-        let nowPlayingCenter = MPNowPlayingInfoCenter.default()
-        nowPlayingCenter.nowPlayingInfo = [:]
-        // end stream
-        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
