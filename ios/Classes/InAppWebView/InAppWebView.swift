@@ -8,8 +8,6 @@
 import Flutter
 import Foundation
 import WebKit
-import MediaPlayer
-import SwiftUI
 public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIGestureRecognizerDelegate, PullToRefreshDelegate {
 
     var windowId: Int64?
@@ -82,20 +80,6 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         configuration.allowsAirPlayForMediaPlayback = false
         configuration.allowsPictureInPictureMediaPlayback = false
         configuration.mediaTypesRequiringUserActionForPlayback = []
-        // remove the remote control event
-        let center = MPRemoteCommandCenter.shared()
-        center.playCommand.isEnabled = false
-        center.playCommand.removeTarget(nil)
-        center.pauseCommand.isEnabled = false
-        center.pauseCommand.removeTarget(nil)
-        center.seekBackwardCommand.isEnabled = false
-        center.seekBackwardCommand.removeTarget(nil)
-        center.seekForwardCommand.isEnabled = false
-        center.seekForwardCommand.removeTarget(nil)
-        let nowPlayingCenter = MPNowPlayingInfoCenter.default()
-        nowPlayingCenter.nowPlayingInfo = [:]
-        // end stream
-        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     override public var frame: CGRect {
