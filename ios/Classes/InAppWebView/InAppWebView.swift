@@ -1604,7 +1604,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
             return .commandFailed
         }
         let nowPlayingCenter = MPNowPlayingInfoCenter.default()
-        nowPlayingCenter.nowPlayingInfo = nil
+        nowPlayingCenter.nowPlayingInfo = [:]
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
