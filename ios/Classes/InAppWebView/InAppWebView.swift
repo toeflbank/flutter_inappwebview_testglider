@@ -1585,7 +1585,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
             configuration.allowsAirPlayForMediaPlayback = false
             configuration.allowsPictureInPictureMediaPlayback = false
         }
-        configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone
+        configuration.mediaTypesRequiringUserActionForPlayback = []
         
     }
     
