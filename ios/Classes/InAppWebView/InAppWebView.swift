@@ -1587,18 +1587,24 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         configuration.mediaTypesRequiringUserActionForPlayback = []
         // remove the remote control event
         let center = MPRemoteCommandCenter.shared()
+        center.playCommand.isEnabled = false
         center.playCommand.addTarget { [unowned self] event in 
             return .commandFailed
         }
+        center.pauseCommand.isEnabled = false
         center.pauseCommand.addTarget { [unowned self] event in 
             return .commandFailed
         }
+        center.seekBackwardCommand.isEnabled = false
         center.seekBackwardCommand.addTarget { [unowned self] event in 
             return .commandFailed
         }
+        center.seekForwardCommand.isEnabled = false
         center.seekForwardCommand.addTarget { [unowned self] event in 
             return .commandFailed
-        }        
+        }
+        let nowPlayingCenter = MPNowPlayingInfoCenter.default()
+        nowPlayingCenter.nowPlayingInfo = nil
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
