@@ -134,6 +134,11 @@ public class InAppWebViewOptions: Options<InAppWebView> {
                 realOptions["javaScriptEnabled"] = configuration.defaultWebpagePreferences.allowsContentJavaScript
             }
         }
+        // revised by @seunghwanly
+        // overwrite the options
+        realOptions["allowsAirPlayForMediaPlayback"] = false
+        realOptions["allowsPictureInPictureMediaPlayback"] = false
+
         return realOptions
     }
 }

@@ -547,6 +547,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         // overwrite the configurations from `option`
         // revised by @seunghwanly
         configuration.allowsAirPlayForMediaPlayback = false
+        configuration.mediaTypesRequiringUserActionForPlayback = []
         
         return configuration
     }
