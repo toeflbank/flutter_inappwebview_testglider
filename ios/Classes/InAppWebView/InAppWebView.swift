@@ -76,10 +76,6 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         panGestureRecognizer = UIPanGestureRecognizer()
         panGestureRecognizer.delegate = self
         panGestureRecognizer.addTarget(self, action: #selector(endDraggingDetected))
-        // disable audio external controls
-        configuration.allowsAirPlayForMediaPlayback = false
-        configuration.allowsPictureInPictureMediaPlayback = false
-        configuration.mediaTypesRequiringUserActionForPlayback = []
     }
     
     override public var frame: CGRect {
@@ -547,6 +543,10 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
                 configuration.limitsNavigationsToAppBoundDomains = options.limitsNavigationsToAppBoundDomains
             }
         }
+
+        // overwrite the configurations from `option`
+        // revised by @seunghwanly
+        configuration.allowsAirPlayForMediaPlayback = false
         
         return configuration
     }
@@ -1570,9 +1570,10 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate, WKNavi
         }
     }
     
-    // revised on 07.27.2022 by seunghwanly
+    
     // - purpose: to set current user's permission in permanently
     // - required: iOS version 15+, https://developer.apple.com/documentation/webkit/wkwebview/3763098-setmicrophonecapturestate
+    // revised by @seunghwanly
     @available(iOS 15, *)
     public func webView(
         _ webView: WKWebView, 
